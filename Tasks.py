@@ -11,7 +11,7 @@ def createListDict():
         for row in csv_reader:
             task = {} # create task as dict
             task["Task"] = row["Task"]
-            task["Priority"] = row["Priority"]
+            task["Priority"] = int(row["Priority"])
             task["DeliveryDate"] = dt.datetime.strptime(row["DeliveryDate"],"%d/%m/%y")
             task["HoursRequired"] = int(row["HoursRequired"])
             task["Status"] = row["Status"]
@@ -26,9 +26,31 @@ def sortList(param = ["Priority","DeliveryDate"], list):
     # for task in list:
     #
     # which method??
+
+    pass
+
+def getUrgentTask(list):
+    """
+    Receive the list of tasks and return the more urgent task
+    """
+    urgent = list[0]
+    for task in list[1:]:
+        if(task["priority"] > urgent["priority"]):
+            urgent = task
+        elif(task["priority"] == urgent["priority"]):
+            if(task["DeliveryDate"] <= urgent["DeliveryDate"]):
+                urgent = task
+    return urgent
+
+def alocateTasks(list, freeTime):
+    """
+    return list with activities alocated per free time on week
+    """
+    while(len(list)!=0):
+        urgent = getUrgentTask(list)
     pass
 
 def main():
     tasks = createListDict()
-    print(tasks[0])
+    # print(tasks[0])
 main()
