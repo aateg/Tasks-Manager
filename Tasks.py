@@ -45,12 +45,24 @@ def alocateTasks(list, freeTime, maxActiv, minActiv = 1):
     """
     return list with activities alocated per free time on week
     """
+    tasksAlocated = []
     while(len(list) != 0):
+        task = {}
         urgent = getUrgentTask(list)
         list.pop(list.index(urgent))
-        delta = urgent["DeliveryDate"]-dt.datetime.today()
+        delta = urgent["DeliveryDate"].date()-dt.datetime.today().date()
         hoursPerDay = round(urgent["HoursRequired"]/delta.days)
         # now it is only alocate this hours on freeTime
+        if(hoursPerDay < maxActiv):
+            # put minActiv
+            task["Task"] = urgent["Task"]
+            task["TimeOnActiv"] = minActiv
+            task["DayToStart"] = dt.datetime.today().date()
+        else:
+            task["Task"] = urgent["Task"]
+            task["TimeOnActiv"] = hoursPerDay
+            task["DayToStart"] = dt.datetime.today().date()
+        tasksAlocated.append(task)
 
 def main():
     tasks = createListDict()
