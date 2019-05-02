@@ -49,7 +49,7 @@ def alocateTasks(list, freeTime, maxActiv, minActiv = 1):
         urgent = getUrgentTask(list)
         list.pop(list.index(urgent))
         delta = urgent["DeliveryDate"]-dt.datetime.today()
-        hoursPerDay = urgent["HoursRequired"]/delta.days
+        hoursPerDay = round(urgent["HoursRequired"]/delta.days)
         # now it is only alocate this hours on freeTime
 
 def main():
