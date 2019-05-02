@@ -18,16 +18,15 @@ def createListDict():
             tasks.append(task) # append task in list with all tasks
     return tasks
 
-def sortList(param = ["Priority","DeliveryDate"], list):
-    """
-    Classify the list based on the parameters.
-    Parameters priority order is left to right.
-    """
-    # for task in list:
-    #
-    # which method??
-
-    pass
+# def sortList(param = ["Priority","DeliveryDate"], list):
+#     """
+#     Classify the list based on the parameters.
+#     Parameters priority order is left to right.
+#     """
+#     # for task in list:
+#     #
+#     # which method??
+#     pass
 
 def getUrgentTask(list):
     """
@@ -35,22 +34,28 @@ def getUrgentTask(list):
     """
     urgent = list[0]
     for task in list[1:]:
-        if(task["priority"] > urgent["priority"]):
+        if(task["Priority"] > urgent["Priority"]):
             urgent = task
-        elif(task["priority"] == urgent["priority"]):
+        elif(task["Priority"] == urgent["Priority"]):
             if(task["DeliveryDate"] <= urgent["DeliveryDate"]):
                 urgent = task
     return urgent
 
-def alocateTasks(list, freeTime):
+def alocateTasks(list, freeTime, maxActiv, minActiv = 1):
     """
     return list with activities alocated per free time on week
     """
-    while(len(list)!=0):
+    while(len(list) != 0):
         urgent = getUrgentTask(list)
-    pass
+        list.pop(list.index(urgent))
+        delta = urgent["DeliveryDate"]-dt.datetime.today()
+        hoursPerDay = urgent["HoursRequired"]/delta.days
+        # now it is only alocate this hours on freeTime
 
 def main():
     tasks = createListDict()
+    freeTime = [4,4,4,4,4,4,4] # free time on week from monday to sunday
+    maxActiv = 2
+    alocateTasks(tasks, freeTime, 4)
     # print(tasks[0])
 main()
