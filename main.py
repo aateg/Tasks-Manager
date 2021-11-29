@@ -1,9 +1,15 @@
-from . import tasks
+from task import AllTasks
+from manager import Manager
+import csv
 
 def main():
     with open('./Tasks.csv', mode='r') as csv_file:
-        csv_reader = csv.DictReader(csv_file) # read csv
-        tasks = Tasks(csv_reader)
-    freeTime = [4,4,4,4,4,4,4] # free time on week from monday to sunday
-    maxActiv = 2
+        csvReader = csv.DictReader(csv_file) # read csv
+        tasks = AllTasks(csvReader)
+    freeTime = 2
+
+    manager = Manager(tasks, freeTime)
+    print(manager.getUrgentTask())
+
+
 main()
